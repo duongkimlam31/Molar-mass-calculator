@@ -1,3 +1,4 @@
+#molar mass values of a compound
 molar_mass = {'H': 1.008, 'He': 4.0026, 'Li' : 6.94, 'Be' : 9.0122, 'B' : 10.81, 'C' : 12.011, 'N' : 14.007,
               'O':15.999, 'F' : 18.998, 'Ne' : 20.180, 'Na' : 22.990, 'Mg': 24.305, 'Al' : 26.982, 'Si' : 28.085,
               'P' : 30.974, 'S' : 32.06, 'Cl' : 35.45, 'Ar' : 39.948, 'K' : 39.098, 'Ca' : 40.078, 'Sc' : 44.956,
@@ -9,12 +10,21 @@ molar_mass = {'H': 1.008, 'He': 4.0026, 'Li' : 6.94, 'Be' : 9.0122, 'B' : 10.81,
               'Re' : 186.2, 'Os' : 190.23, 'Ir' : 192.22, 'Pt' : 195.08, 'Au' : 196.97, 'Hg' : 200.59, 'Tl' : 204.38, 'Pb' : 207.2,
               'Bi' : 208.98, 'Po' : 209, 'At' : 210, 'Rn' : 222, 'Fr' : 223, 'Ra' : 226, 'Rf' : 267, 'Db' : 268, 'Sg' : 269, 'Bh' : 270, 'Hs' : 277}
 
+#takes a name of a compound in a form of a string and calculate its molar mass
 def calculate(compound):
     atoms = []
     total = -1
     result = 0
+    bracket = False
     while len(compound) != 0:
-        if compound[0].isupper():
+        if compound[0] == "(":
+            total += 1
+            atoms.append(compound[1] + compound[4])
+            atoms.append(compound[2] + compound[4])
+            compound = compound[5:]
+        elif compound[0] == ")":
+            compound = compound[1:]
+        elif compound[0].isupper():
             total +=1
             atoms.append(compound[0])
             compound = compound[1:]
@@ -38,9 +48,10 @@ def calculate(compound):
             result += molar_mass[str] * int(i)
     return result
 
-
+#some examples 
 if __name__ == "__main__":
     print(calculate("H2O"))
     print(calculate("H"))
     print(calculate("HCl"))
     print(calculate("C6H12O6"))
+    print(calculate("Ca(OH)2"))
